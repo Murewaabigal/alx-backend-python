@@ -96,6 +96,15 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.assertEqual(testCls.repos_payload, self.repos_payload)
         self.assertEqual(testCls.public_repos(), self.expected_repos)
         self.mock.assert_called()
+   def test_public_repos_with_license(self):
+        """ Integration test for public repos with License """
+        test_class = GithubOrgClient("google")
+
+        self.assertEqual(test_class.public_repos(), self.expected_repos)
+        self.assertEqual(test_class.public_repos("XLICENSE"), [])
+        self.assertEqual(test_class.public_repos(
+            "apache-2.0"), self.apache2_repos)
+        self.mock.assert_called()
 
     @classmethod
     def tearDownClass(cls):
